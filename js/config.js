@@ -1,8 +1,8 @@
-// Preencha com suas chaves (não comite chaves sensíveis).
-// Supabase (Auth + banco)
+// Configuração global da Hummes
+// Supabase + Builder
+
 window.HUMMES_CONFIG = {
- SUPABASE_URL: "https://neloydywbvyprygyhjmk.supabase.co",
-SUPABASE_ANON_KEY: "sb_publishable_BfzxeOH9u97ihGvDy_dq9Q_DtaQsjzt",
-  // Link do produto (builder) — pode ser o seu app no Vercel
-  BOTSUITE_URL: "https://hummes-bot-builderr.vercel.app/"
+  SUPABASE_URL: "https://neloydywbvypyryghjhmk.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_Bfzxe0H9u97iH6Vdy_dq9Q_DtaQsjzt",
+  BOTSUITE_URL: "https://hummes-bot-builder.vercel.app/"
 };
