@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Entrar | Hummes</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/auth.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><img class="brand-logo" src="/assets/logo.png" alt="Hummes"/><span>Hummes</span></a>
+      <nav class="nav">
+        <a href="/pricing.html">Planos</a>
+        <a href="/docs.html">Tutorial</a>
+        <a href="/#contato">Contato</a>
+      </nav>
+      <div class="top-actions">
+        <a class="btn ghost" href="/pricing.html">Ver planos</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pad-top">
+    <section class="card auth">
+      <h1>Entrar</h1>
+      <p class="muted">Acesse seu painel pra criar e publicar seu bot.</p>
+
+      <div class="grid2">
+        <div>
+          <h3>Criar conta</h3>
+          <label class="label">E-mail</label>
+          <input id="suEmail" class="input" type="email" placeholder="voce@empresa.com"/>
+          <label class="label">Senha</label>
+          <input id="suPass" class="input" type="password" placeholder="••••••••"/>
+          <button id="btnSignup" class="btn primary full">Criar conta</button>
+          <p class="tiny muted">Você pode alterar seus dados depois.</p>
+        </div>
+
+        <div>
+          <h3>Já tenho conta</h3>
+          <label class="label">E-mail</label>
+          <input id="siEmail" class="input" type="email" placeholder="voce@empresa.com"/>
+          <label class="label">Senha</label>
+          <input id="siPass" class="input" type="password" placeholder="••••••••"/>
+          <button id="btnSignin" class="btn dark full">Entrar</button>
+          <button id="btnReset" class="btn ghost full">Esqueci a senha</button>
+        </div>
+      </div>
+
+      <div id="msg" class="notice" style="display:none;"></div>
+    </section>
+  </main>
+
+  <script>
+    function qs(k){ return new URLSearchParams(location.search).get(k); }
+    const next = qs("next") || "/dashboard.html";
+    const msgEl = document.getElementById("msg");
+    function show(msg, ok){
+      msgEl.style.display="block";
+      msgEl.className = "notice " + (ok ? "ok" : "err");
+      msgEl.textContent = msg;
+    }
+
+    async function getClient(){
+      const s = await window.HUMMES.auth.init();
+      return s;
+    }
+
+    document.getElementById("btnSignup").onclick = async () => {
+      const supabase = await getClient();
+      if(!supabase) return show("Falta configurar o Supabase em js/config.js", false);
+      const email = document.getElementById("suEmail").value.trim();
+      const password = document.getElementById("suPass").value;
+      const { error } = await supabase.auth.signUp({ email, password });
+      if(error) return show(error.message, false);
+      show("Conta criada! Se o Supabase pedir confirmação por e-mail, confirme e entre.", true);
+    };
+
+    document.getElementById("btnSignin").onclick = async () => {
+      const supabase = await getClient();
+      if(!supabase) return show("Falta configurar o Supabase em js/config.js", false);
+      const email = document.getElementById("siEmail").value.trim();
+      const password = document.getElementById("siPass").value;
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if(error) return show(error.message, false);
+      location.href = next;
+    };
+
+    document.getElementById("btnReset").onclick = async () => {
+      const supabase = await getClient();
+      if(!supabase) return show("Falta configurar o Supabase em js/config.js", false);
+      const email = document.getElementById("siEmail").value.trim();
+      if(!email) return show("Digita teu e-mail pra eu enviar o reset.", false);
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: location.origin + "/login.html" });
+      if(error) return show(error.message, false);
+      show("Enviei o e-mail de reset (confere spam).", true);
+    };
+  </script>
+</body>
+</html>

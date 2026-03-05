@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Painel | Hummes</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/auth.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><img class="brand-logo" src="/assets/logo.png" alt="Hummes"/><span>Hummes</span></a>
+      <nav class="nav">
+        <a href="/pricing.html">Planos</a>
+        <a href="/docs.html">Tutorial</a>
+      </nav>
+      <div class="top-actions">
+        <button id="btnOut" class="btn ghost">Sair</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pad-top">
+    <section class="card">
+      <h1>Seu painel</h1>
+      <p class="muted">Aqui você acompanha seu plano e acessa o editor de bots.</p>
+
+      <div class="grid2">
+        <div class="card inner">
+          <h3>Status do plano</h3>
+          <div id="planBox" class="muted">Carregando...</div>
+          <div class="row">
+            <a class="btn primary" href="/pricing.html">Gerenciar/Assinar</a>
+            <a class="btn ghost" href="/docs.html">Ver tutorial</a>
+          </div>
+        </div>
+
+        <div class="card inner">
+          <h3>BotSuite</h3>
+          <p class="muted">Editor visual para criar fluxos de atendimento.</p>
+          <button id="btnBuilder" class="btn dark full" disabled>Acessar BotSuite</button>
+          <p class="tiny muted">O acesso é liberado quando o plano está ativo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Próximos passos</h2>
+      <ol class="list">
+        <li>Assine um plano.</li>
+        <li>Conecte seu número do WhatsApp (tutorial).</li>
+        <li>Crie seu fluxo e publique.</li>
+      </ol>
+    </section>
+  </main>
+
+  <script>
+    (async function(){
+      const session = await window.HUMMES.auth.requireAuth("/dashboard.html");
+      if(!session) return;
+      document.getElementById("btnOut").onclick = () => window.HUMMES.auth.signOut();
+
+      const sub = await window.HUMMES.auth.getSubscription();
+      const planBox = document.getElementById("planBox");
+      const btn = document.getElementById("btnBuilder");
+      const cfg = window.HUMMES_CONFIG || {};
+      const url = cfg.BOTSUITE_URL || "https://hummes-bot-builderr.vercel.app/";
+
+      if(sub.status === "active"){
+        planBox.innerHTML = `<b>Ativo</b> • Plano: ${sub.plan || "-"} • Renovação: ${sub.current_period_end ? new Date(sub.current_period_end).toLocaleDateString("pt-BR") : "-"}`;
+        btn.disabled = false;
+        btn.onclick = () => location.href = url;
+      }else if(sub.status === "none"){
+        planBox.innerHTML = `<b>Sem plano ativo</b> • Assine para liberar o editor.`;
+      }else{
+        planBox.innerHTML = `<b>Status:</b> ${sub.status || "desconhecido"} • Se você acabou de pagar, aguarde alguns minutos.`;
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Planos | Hummes BotSuite</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/config.js"></script>
+  <script src="/js/auth.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="/"><img class="brand-logo" src="/assets/logo.png" alt="Hummes"/><span>Hummes</span></a>
+      <nav class="nav">
+        <a href="/#solucoes">Soluções</a>
+        <a href="/pricing.html" class="active">Planos</a>
+        <a href="/docs.html">Tutorial</a>
+        <a href="/#contato">Contato</a>
+      </nav>
+      <div class="top-actions">
+        <a class="btn ghost" href="/login.html">Entrar</a>
+        <a class="btn primary" href="/dashboard.html">Painel</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container pad-top">
+    <section class="card hero">
+      <div>
+        <h1>Planos simples. Sem fidelidade.</h1>
+        <p class="muted">Assine, use, cancele quando quiser. Você tem acesso ao editor de bot e aos templates prontos.</p>
+        <div class="badges">
+          <span class="badge">WhatsApp + Fluxos</span>
+          <span class="badge">Templates prontos</span>
+          <span class="badge">Edição livre</span>
+          <span class="badge">Suporte via WhatsApp</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="card">
+        <h2>Starter</h2>
+        <p class="price">R$ 49,90<span>/mês</span></p>
+        <ul class="list">
+          <li>1 número / 1 bot ativo</li>
+          <li>Editor visual + templates</li>
+          <li>Publicação guiada</li>
+          <li>Suporte via WhatsApp (IA + humano)</li>
+        </ul>
+        <button id="btnStarter" class="btn primary full">Assinar Starter</button>
+        <p class="tiny muted">Pagamento via Mercado Pago. Cancelamento a qualquer momento.</p>
+      </div>
+
+      <div class="card">
+        <h2>Pro</h2>
+        <p class="price">R$ 99,90<span>/mês</span></p>
+        <ul class="list">
+          <li>Até 3 números / 3 bots ativos</li>
+          <li>Templates + import/export</li>
+          <li>Prioridade no suporte</li>
+          <li>Integrações básicas (webhook)</li>
+        </ul>
+        <button id="btnPro" class="btn dark full">Assinar Pro</button>
+        <p class="tiny muted">Ideal pra quem tem mais de um atendimento.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Como funciona a ativação</h2>
+      <ol class="list">
+        <li>Você cria sua conta (e-mail e senha).</li>
+        <li>Assina um plano.</li>
+        <li>O sistema libera o <b>Painel</b> e o acesso ao BotSuite.</li>
+      </ol>
+      <p class="muted tiny">Obs: para o bot funcionar no seu WhatsApp, existe um passo de conexão do número (WhatsApp Business/Cloud API). A gente explica isso no tutorial.</p>
+    </section>
+  </main>
+
+  <script>
+    async function startCheckout(plan){
+      const session = await window.HUMMES.auth.requireAuth("/pricing.html");
+      if(!session) return;
+      const res = await fetch("/api/create-preference", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ plan })
+      });
+      if(!res.ok){
+        alert("Não consegui iniciar o pagamento. Tenta de novo em alguns minutos.");
+        return;
+      }
+      const data = await res.json();
+      if(data && data.init_point){
+        location.href = data.init_point;
+      } else {
+        alert("Resposta inválida do pagamento.");
+      }
+    }
+    document.getElementById("btnStarter").onclick = () => startCheckout("starter");
+    document.getElementById("btnPro").onclick = () => startCheckout("pro");
+  </script>
+</body>
+</html>
