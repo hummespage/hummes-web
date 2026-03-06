@@ -669,6 +669,16 @@
       align-items:stretch;
     }
 
+    .auth-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .hidden{
+      display:none !important;
+    }
+
     @media (max-width: 1080px){
       .menu{
         display:none;
@@ -1089,39 +1099,39 @@
         </div>
 
         <div class="card pad">
-  <b style="display:block;margin-bottom:6px;font-size:15px">Login / Painel</b>
+          <b style="display:block;margin-bottom:6px;font-size:15px">Login / Painel</b>
 
-  <div style="color:var(--muted); font-size:13px; line-height:1.55; margin-bottom:12px">
-    Entrar para editar templates, publicar o bot e acessar o painel.
-  </div>
+          <div style="color:var(--muted); font-size:13px; line-height:1.55; margin-bottom:12px">
+            Entrar para editar templates, publicar o bot e acessar o painel.
+          </div>
 
-  <div id="login" style="display:grid; gap:10px; margin-top:12px">
+          <div id="login" style="display:grid; gap:10px; margin-top:12px">
+            <input
+              id="auth-email"
+              type="email"
+              placeholder="Seu e-mail"
+              style="padding:12px 14px; border-radius:14px; border:1px solid var(--stroke); background:var(--panelStrong); color:var(--text); outline:none;"
+            />
 
-    <input
-      id="auth-email"
-      type="email"
-      placeholder="Seu e-mail"
-      style="padding:12px 14px; border-radius:14px; border:1px solid var(--stroke); background:var(--panelStrong); color:var(--text); outline:none;"
-    />
+            <input
+              id="auth-password"
+              type="password"
+              placeholder="Sua senha"
+              style="padding:12px 14px; border-radius:14px; border:1px solid var(--stroke); background:var(--panelStrong); color:var(--text); outline:none;"
+            />
 
-    <input
-      id="auth-password"
-      type="password"
-      placeholder="Sua senha"
-      style="padding:12px 14px; border-radius:14px; border:1px solid var(--stroke); background:var(--panelStrong); color:var(--text); outline:none;"
-    />
+            <div class="auth-row">
+              <button id="btn-login" class="btn" type="button">Entrar</button>
+              <button id="btn-register" class="btn primary" type="button">Criar conta</button>
+              <button id="btn-panel" class="btn primary hidden" type="button">Ir para painel</button>
+              <button id="btn-logout" class="btn ghost hidden" type="button">Sair</button>
+            </div>
 
-    <div style="display:flex; gap:10px; flex-wrap:wrap">
-      <button id="btn-login" class="btn btn_primary" type="button">Entrar</button>
-      <button id="btn-register" class="btn" type="button">Criar conta</button>
-    </div>
-
-    <div id="auth-status" style="font-size:12px; color:var(--muted2)">
-      Digite e-mail e senha para entrar ou criar conta.
-    </div>
-
-  </div>
-</div> 
+            <div id="auth-status" style="font-size:12px; color:var(--muted2)">
+              Digite e-mail e senha para entrar ou criar conta.
+            </div>
+          </div>
+        </div>
 
         <div class="card pad">
           <b style="display:block;margin-bottom:6px;font-size:15px">Empresa</b>
@@ -1159,67 +1169,170 @@
     </footer>
   </main>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/config.js"></script>
 
   <script>
-    const supabase = window.supabase.createClient(
-  window.HUMMES_CONFIG.SUPABASE_URL,
-  window.HUMMES_CONFIG.SUPABASE_ANON_KEY
-);
+    const supabaseClient = window.supabase.createClient(
+      window.HUMMES_CONFIG.SUPABASE_URL,
+      window.HUMMES_CONFIG.SUPABASE_ANON_KEY
+    );
+
     document.getElementById("year").textContent = new Date().getFullYear();
 
     const emailInput = document.getElementById("auth-email");
-const passwordInput = document.getElementById("auth-password");
-const btnLogin = document.getElementById("btn-login");
-const btnRegister = document.getElementById("btn-register");
-const status = document.getElementById("auth-status");
+    const passwordInput = document.getElementById("auth-password");
+    const btnLogin = document.getElementById("btn-login");
+    const btnRegister = document.getElementById("btn-register");
+    const btnPanel = document.getElementById("btn-panel");
+    const btnLogout = document.getElementById("btn-logout");
+    const authStatus = document.getElementById("auth-status");
 
-btnRegister?.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+    function showLoggedOutState() {
+      btnLogin?.classList.remove("hidden");
+      btnRegister?.classList.remove("hidden");
+      btnPanel?.classList.add("hidden");
+      btnLogout?.classList.add("hidden");
 
-  if (!email || !password) {
-    status.textContent = "Digite e-mail e senha.";
-    return;
-  }
+      if (emailInput) emailInput.disabled = false;
+      if (passwordInput) passwordInput.disabled = false;
+    }
 
-  status.textContent = "Criando conta...";
+    function showLoggedInState(user) {
+      btnLogin?.classList.add("hidden");
+      btnRegister?.classList.add("hidden");
+      btnPanel?.classList.remove("hidden");
+      btnLogout?.classList.remove("hidden");
 
-  const { error } = await supabase.auth.signUp({
-    email,
-    password
-  });
+      if (emailInput) {
+        emailInput.disabled = true;
+        emailInput.value = user?.email || "";
+      }
 
-  if (error) {
-    status.textContent = "Erro: " + error.message;
-  } else {
-    status.textContent = "Conta criada! Verifique seu e-mail.";
-  }
-});
+      if (passwordInput) {
+        passwordInput.disabled = true;
+        passwordInput.value = "********";
+      }
+    }
 
-btnLogin?.addEventListener("click", async () => {
-  const email = emailInput.value.trim();
-  const password = passwordInput.value.trim();
+    function goToPanel() {
+      if (window.HUMMES_CONFIG?.BOTSUITE_URL) {
+        window.location.href = window.HUMMES_CONFIG.BOTSUITE_URL;
+      } else {
+        authStatus.textContent = "BOTSUITE_URL não configurada no js/config.js.";
+      }
+    }
 
-  if (!email || !password) {
-    status.textContent = "Digite e-mail e senha.";
-    return;
-  }
+    async function refreshSessionUI() {
+      const { data, error } = await supabaseClient.auth.getSession();
 
-  status.textContent = "Entrando...";
+      if (error) {
+        authStatus.textContent = "Erro ao verificar sessão: " + error.message;
+        showLoggedOutState();
+        return;
+      }
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+      const user = data?.session?.user;
 
-  if (error) {
-    status.textContent = "Erro: " + error.message;
-  } else {
-    status.textContent = "Login realizado!";
-  }
-});
+      if (user) {
+        showLoggedInState(user);
+        authStatus.textContent = "Logado como " + (user.email || "usuário") + ".";
+      } else {
+        showLoggedOutState();
+        authStatus.textContent = "Digite e-mail e senha para entrar ou criar conta.";
+      }
+    }
+
+    async function handleRegister() {
+      const email = emailInput?.value.trim();
+      const password = passwordInput?.value.trim();
+
+      if (!email || !password) {
+        authStatus.textContent = "Digite e-mail e senha.";
+        return;
+      }
+
+      authStatus.textContent = "Criando conta...";
+
+      const { error } = await supabaseClient.auth.signUp({
+        email,
+        password
+      });
+
+      if (error) {
+        authStatus.textContent = "Erro: " + error.message;
+        return;
+      }
+
+      authStatus.textContent = "Conta criada! Verifique seu e-mail.";
+    }
+
+    async function handleLogin() {
+      const email = emailInput?.value.trim();
+      const password = passwordInput?.value.trim();
+
+      if (!email || !password) {
+        authStatus.textContent = "Digite e-mail e senha.";
+        return;
+      }
+
+      authStatus.textContent = "Entrando...";
+
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        authStatus.textContent = "Erro: " + error.message;
+        return;
+      }
+
+      showLoggedInState(data?.user || { email });
+      authStatus.textContent = "Login realizado! Redirecionando...";
+
+      setTimeout(() => {
+        goToPanel();
+      }, 700);
+    }
+
+    async function handleLogout() {
+      authStatus.textContent = "Saindo...";
+
+      const { error } = await supabaseClient.auth.signOut();
+
+      if (error) {
+        authStatus.textContent = "Erro ao sair: " + error.message;
+        return;
+      }
+
+      if (emailInput) emailInput.value = "";
+      if (passwordInput) passwordInput.value = "";
+
+      showLoggedOutState();
+      authStatus.textContent = "Sessão encerrada.";
+    }
+
+    btnRegister?.addEventListener("click", handleRegister);
+    btnLogin?.addEventListener("click", handleLogin);
+    btnPanel?.addEventListener("click", goToPanel);
+    btnLogout?.addEventListener("click", handleLogout);
+
+    passwordInput?.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        handleLogin();
+      }
+    });
+
+    supabaseClient.auth.onAuthStateChange((_event, session) => {
+      const user = session?.user;
+
+      if (user) {
+        showLoggedInState(user);
+      } else {
+        showLoggedOutState();
+      }
+    });
 
     function openWhats(phone, message){
       const clean = String(phone || "").replace(/\D/g,'');
@@ -1242,11 +1355,18 @@ btnLogin?.addEventListener("click", async () => {
         );
       }
 
-      if(action === "open-login" || action === "open-register" || action === "start-checkout" || action === "open-demo"){
+      if(
+        action === "open-login" ||
+        action === "open-register" ||
+        action === "start-checkout" ||
+        action === "open-demo"
+      ){
         const tgt = document.querySelector("#login");
         if(tgt) tgt.scrollIntoView({behavior:"smooth", block:"start"});
       }
     });
+
+    refreshSessionUI();
   </script>
 </body>
 </html>
