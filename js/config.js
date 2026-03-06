@@ -3,6 +3,6 @@
 
 window.HUMMES_CONFIG = {
   SUPABASE_URL: "https://uccwuefbquskgpzvzenr.supabase.co",
-  SUPABASE_ANON_KEY: "COLE_AQUI_A_PUBLISHABLE_KEY_DO_HUMMES_AUTH2",
+  SUPABASE_ANON_KEY: "sb_publishable_Xy734EtkpT3YdattaQmhSw_1nl4rAuL",
   BOTSUITE_URL: "https://hummes-bot-builder.vercel.app/"
 };
