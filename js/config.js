@@ -2,7 +2,7 @@
 // Supabase + Builder
 
 window.HUMMES_CONFIG = {
-  SUPABASE_URL: "https://neloydywbvypyryghjhmk.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_Bfzxe0H9u97iH6Vdy_dq9Q_DtaQsjzt",
+  SUPABASE_URL: "https://slbugrushdshjitmjghn.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_KpJdkoz4fF9zVzBwmV4xcQ_gL1F80YS",
   BOTSUITE_URL: "https://hummes-bot-builder.vercel.app/"
 };
