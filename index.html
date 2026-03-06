@@ -2,197 +2,1171 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hummes • Hummes BotSuite</title>
-  <meta name="description" content="Editor de bots de WhatsApp para pequenos negócios — simples, rápido e com cara de produto premium." />
-  <meta property="og:title" content="Hummes • Hummes BotSuite" />
-  <meta property="og:description" content="Editor de bots de WhatsApp para pequenos negócios — simples, rápido e com cara de produto premium." />
-  <meta property="og:image" content="assets/a45489e5-e831-49fc-8cce-5c62b98a563a.png" />
-  <link rel="icon" href="assets/kkkkkk.png" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hummes BotSuite — Bot de WhatsApp simples, editável e com templates</title>
+  <meta name="description" content="Crie e edite seu bot de WhatsApp em minutos. Templates prontos, passo a passo e painel simples. Assinatura mensal acessível." />
+  <meta name="theme-color" content="#F6F3EE" />
+
+  <style>
+    :root{
+      --bg: #f6f3ee;
+      --panel: rgba(255,255,255,.82);
+      --panelStrong: #ffffff;
+      --stroke: rgba(60,50,40,.08);
+      --text: #241f1a;
+      --muted: rgba(36,31,26,.72);
+      --muted2: rgba(36,31,26,.52);
+      --shadow: 0 20px 46px rgba(66,53,40,.08);
+      --shadow2: 0 12px 28px rgba(66,53,40,.10);
+      --r: 22px;
+
+      --blue:   #8ec7df;
+      --green:  #95c98c;
+      --yellow: #efc34f;
+      --orange: #e78a44;
+      --red:    #c95c48;
+      --purple: #7a6b79;
+
+      --accent: linear-gradient(90deg, var(--blue), var(--green), var(--yellow), var(--orange), var(--red));
+      --accentSoft: linear-gradient(
+        90deg,
+        rgba(142,199,223,.20),
+        rgba(149,201,140,.18),
+        rgba(239,195,79,.18),
+        rgba(231,138,68,.18),
+        rgba(201,92,72,.16)
+      );
+
+      --heroGlow1: radial-gradient(1200px 620px at 10% 10%, rgba(142,199,223,.22), transparent 58%);
+      --heroGlow2: radial-gradient(900px 520px at 88% 18%, rgba(239,195,79,.16), transparent 54%);
+      --heroGlow3: radial-gradient(700px 460px at 70% 72%, rgba(149,201,140,.13), transparent 58%);
+
+      --max: 1160px;
+    }
+
+    *{box-sizing:border-box}
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        var(--heroGlow1),
+        var(--heroGlow2),
+        var(--heroGlow3),
+        var(--bg);
+    }
+
+    a{
+      color:inherit;
+      text-decoration:none;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    .wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 18px;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(246,243,238,.74);
+      border-bottom: 1px solid rgba(60,50,40,.06);
+    }
+
+    .nav{
+      height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .logoImg{
+      width:48px;
+      height:48px;
+      object-fit:contain;
+      border-radius:16px;
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(246,240,232,.88));
+      padding:5px;
+      box-shadow: 0 10px 24px rgba(25,20,15,.08);
+      border:1px solid rgba(60,50,40,.06);
+      flex-shrink:0;
+    }
+
+    .brandText{
+      min-width:0;
+    }
+
+    .brandText h1{
+      font-size:15px;
+      margin:0;
+      letter-spacing:.2px;
+      font-weight:800;
+    }
+
+    .brandText small{
+      display:block;
+      font-size:12px;
+      color:var(--muted2);
+      margin-top:2px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .menu{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .menu a{
+      font-size:13px;
+      color:var(--muted);
+      padding:9px 11px;
+      border-radius:12px;
+      transition: background .15s ease, color .15s ease, transform .15s ease;
+    }
+
+    .menu a:hover{
+      background: rgba(255,255,255,.65);
+      color:var(--text);
+      transform: translateY(-1px);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-shrink:0;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:0 15px;
+      border-radius:15px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 10px 18px rgba(15,23,42,.05);
+      font-size:13px;
+      font-weight:600;
+      cursor:pointer;
+      transition: transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      color:var(--text);
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: var(--shadow2);
+    }
+
+    .btn.primary{
+      border:0;
+      background: var(--accent);
+      color:#241b14;
+      font-weight:800;
+    }
+
+    .btn.ghost{
+      background: rgba(255,255,255,.52);
+    }
+
+    .btn.soft{
+      background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(250,246,240,.86));
+    }
+
+    .hero{
+      padding:38px 0 18px;
+    }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.03fr .97fr;
+      gap:24px;
+      align-items:stretch;
+    }
+
+    .card{
+      background: var(--panel);
+      border:1px solid rgba(60,50,40,.06);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .pad{
+      padding:24px;
+    }
+
+    .heroCard{
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.82)),
+        var(--panelStrong);
+    }
+
+    .heroCard::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at top left, rgba(142,199,223,.14), transparent 30%),
+        radial-gradient(circle at top right, rgba(239,195,79,.10), transparent 26%),
+        radial-gradient(circle at bottom left, rgba(149,201,140,.10), transparent 24%);
+      pointer-events:none;
+    }
+
+    .heroInner{
+      position:relative;
+      z-index:1;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border-radius:999px;
+      background: var(--accentSoft);
+      border:1px solid rgba(60,50,40,.06);
+      font-size:12px;
+      font-weight:700;
+      color: rgba(36,31,26,.78);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.55);
+    }
+
+    .hTitle{
+      font-size:48px;
+      line-height:1.02;
+      margin:16px 0 12px;
+      letter-spacing:-1px;
+    }
+
+    .hTitle span{
+      background: var(--accent);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .hSub{
+      color:var(--muted);
+      margin:0 0 20px;
+      font-size:16px;
+      line-height:1.55;
+      max-width:720px;
+    }
+
+    .heroInfoBar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:16px 0 0;
+    }
+
+    .heroInfoBar .chip{
+      background: rgba(255,255,255,.76);
+      border-color: rgba(60,50,40,.06);
+      font-weight:600;
+    }
+
+    .heroCtas{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+
+    .row{
+      display:grid;
+      gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+      margin-top:18px;
+    }
+
+    .mini{
+      border:1px solid rgba(60,50,40,.06);
+      border-radius:18px;
+      padding:15px;
+      background: rgba(255,255,255,.70);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+    }
+
+    .mini b{
+      display:block;
+      margin-bottom:8px;
+      font-size:15px;
+    }
+
+    .mini span{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.58;
+      display:block;
+    }
+
+    .mock{
+      min-height: 330px;
+      border-radius: var(--r);
+      border:1px solid rgba(60,50,40,.06);
+      overflow:hidden;
+      position:relative;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.82));
+      box-shadow: var(--shadow);
+    }
+
+    .brandMock{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      background:
+        radial-gradient(circle at top left, rgba(142,199,223,.15), transparent 34%),
+        radial-gradient(circle at top right, rgba(239,195,79,.13), transparent 34%),
+        radial-gradient(circle at bottom left, rgba(149,201,140,.12), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.95), rgba(249,246,241,.92));
+    }
+
+    .brandMock img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius:20px;
+      box-shadow: 0 18px 40px rgba(30,24,18,.10);
+      border:1px solid rgba(60,50,40,.05);
+    }
+
+    .chip{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(60,50,40,.06);
+      background: rgba(255,255,255,.78);
+      font-size:13px;
+      color: rgba(36,31,26,.82);
+    }
+
+    section{
+      padding:24px 0;
+    }
+
+    .secHead{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+
+    .secTitle{
+      font-size:24px;
+      margin:0 0 8px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      letter-spacing:-.3px;
+    }
+
+    .secSub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.5;
+      max-width:760px;
+    }
+
+    .grid3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .feature{
+      transition: transform .14s ease, box-shadow .14s ease;
+      height:100%;
+    }
+
+    .feature:hover{
+      transform: translateY(-2px);
+      box-shadow: var(--shadow2);
+    }
+
+    .feature h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+
+    .feature p{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+    }
+
+    .steps{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:14px;
+    }
+
+    .step b{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      font-size:15px;
+    }
+
+    .num{
+      width:28px;
+      height:28px;
+      border-radius:11px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background: var(--accentSoft);
+      border:1px solid rgba(60,50,40,.06);
+      font-size:12px;
+      flex-shrink:0;
+    }
+
+    .pricing{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .price{
+      position:relative;
+      overflow:hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.84));
+    }
+
+    .price::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:0;
+      right:0;
+      height:5px;
+      background: var(--accent);
+      opacity:.95;
+    }
+
+    .badge{
+      position:absolute;
+      top:14px;
+      right:14px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: var(--accent);
+      font-size:12px;
+      font-weight:800;
+      border:1px solid rgba(60,50,40,.06);
+      color:#2b2118;
+    }
+
+    .value{
+      font-size:38px;
+      font-weight:900;
+      margin:10px 0 4px;
+      letter-spacing:-1px;
+    }
+
+    .per{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    ul.clean{
+      padding-left:18px;
+      margin:14px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    ul.clean li{
+      margin:8px 0;
+      line-height:1.45;
+    }
+
+    details{
+      border:1px solid rgba(60,50,40,.06);
+      border-radius:18px;
+      padding:12px 14px;
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--shadow);
+    }
+
+    details summary{
+      cursor:pointer;
+      font-weight:800;
+      font-size:14px;
+    }
+
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+    }
+
+    .ctaBox{
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86));
+      border:1px solid rgba(60,50,40,.06);
+      border-radius: var(--r);
+      box-shadow: var(--shadow);
+      padding:22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .ctaBox::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at left center, rgba(142,199,223,.13), transparent 28%),
+        radial-gradient(circle at right center, rgba(239,195,79,.11), transparent 28%);
+      pointer-events:none;
+    }
+
+    .ctaBox > *{
+      position:relative;
+      z-index:1;
+    }
+
+    .foot{
+      padding:26px 0 42px;
+      color: var(--muted);
+      font-size:12px;
+    }
+
+    .footRow{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .mutedLink{
+      opacity:.82;
+    }
+
+    .mutedLink:hover{
+      opacity:1;
+    }
+
+    .heroBrandStrip{
+      margin-top:18px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      padding-top:18px;
+      border-top:1px solid rgba(60,50,40,.06);
+    }
+
+    .miniLogo{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      object-fit:contain;
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(246,240,232,.88));
+      padding:7px;
+      box-shadow: 0 12px 22px rgba(25,20,15,.07);
+      border:1px solid rgba(60,50,40,.05);
+    }
+
+    .brandPalette{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .brandDot{
+      width:36px;
+      height:36px;
+      border-radius:50%;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,.45);
+      border:1px solid rgba(60,50,40,.05);
+    }
+
+    .dotBlue{background:#8ec7df}
+    .dotGreen{background:#95c98c}
+    .dotYellow{background:#efc34f}
+    .dotOrange{background:#e78a44}
+    .dotRed{background:#c95c48}
+
+    .spectrum{
+      width:100%;
+      max-width:290px;
+      height:8px;
+      border-radius:999px;
+      background: linear-gradient(90deg, #e78a44, #e4a34a, #d9c552, #97c985, #82c8d7, #b1d69a, #7a6b79);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.3);
+    }
+
+    .slogan{
+      font-size:12px;
+      letter-spacing:3px;
+      color:var(--muted2);
+      text-transform:uppercase;
+    }
+
+    .sectionImageCard{
+      overflow:hidden;
+      padding:0;
+      min-height: 100%;
+      display:flex;
+      align-items:stretch;
+    }
+
+    .sectionImageCard img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .twoCol{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    @media (max-width: 1080px){
+      .menu{
+        display:none;
+      }
+
+      .heroGrid,
+      .twoCol{
+        grid-template-columns:1fr;
+      }
+
+      .row,
+      .grid3,
+      .pricing,
+      .steps{
+        grid-template-columns:1fr;
+      }
+
+      .hTitle{
+        font-size:40px;
+      }
+    }
+
+    @media (max-width: 700px){
+      .nav{
+        height:auto;
+        padding:14px 0;
+        align-items:flex-start;
+        flex-wrap:wrap;
+      }
+
+      .actions{
+        width:100%;
+        justify-content:flex-start;
+        flex-wrap:wrap;
+      }
+
+      .hTitle{
+        font-size:34px;
+      }
+
+      .pad{
+        padding:18px;
+      }
+
+      .hero{
+        padding-top:24px;
+      }
+
+      .brandText small{
+        white-space:normal;
+      }
+
+      .brandPalette{
+        gap:8px;
+      }
+
+      .brandDot{
+        width:28px;
+        height:28px;
+      }
+
+      .miniLogo{
+        width:50px;
+        height:50px;
+      }
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="index.html">
-      <img src="assets/kkkkkk.png" alt="Hummes" />
-      <div class="t"><b>Hummes</b><span>Tecnologia • Humanidade • Equilíbrio</span></div>
-    </a>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Hummes BotSuite">
+          <img src="./assets/logo-hummes.png" alt="Logo Hummes" class="logoImg" />
+          <div class="brandText">
+            <h1>Hummes</h1>
+            <small>BotSuite • Automação simples para WhatsApp</small>
+          </div>
+        </a>
 
-    <nav class="navlinks">
-      <a href="index.html#sobre">Sobre</a>
-      <a href="index.html#servicos">Soluções</a>
-      <a href="index.html#produto">Produto</a>
-      <a href="pages/portfolio.html">Portfólio</a>
-      <a href="index.html#contato">Contato</a>
-    </nav>
+        <nav class="menu" aria-label="Menu">
+          <a href="#produto">Produto</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#templates">Templates</a>
+          <a href="#precos">Preços</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contato">Contato</a>
+        </nav>
 
-    <div class="navbtns">
-      <a class="btn" href="https://github.com/hummespage" target="_blank" rel="noreferrer">GitHub</a>
-      <a class="btn primary" href="https://wa.me/5548992155149" target="_blank" rel="noreferrer">WhatsApp</a>
+        <div class="actions">
+          <a class="btn ghost" href="#login" data-action="open-login">Entrar</a>
+          <a class="btn primary" href="#precos">Começar</a>
+          <a class="btn soft" href="#contato" data-action="whatsapp">WhatsApp</a>
+        </div>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="hero">
-  <div class="container heroGrid">
-    <section class="card p">
-      <span class="badge">⚡ Automação de WhatsApp para negócios</span>
-      <h1 class="h1">Hummes BotSuite</h1>
-      <p class="sub">Editor de bots de WhatsApp para pequenos negócios — simples, rápido e com cara de produto premium.</p>
+  <main id="top" class="wrap">
+    <section class="hero">
+      <div class="heroGrid">
+        <div class="card pad heroCard">
+          <div class="heroInner">
+            <span class="pill">⚡ Bot de WhatsApp pronto pra vender, atender e organizar teu negócio</span>
 
-      <div class="ctaRow">
-        <a class="btn primary" href="/pricing.html">Ver planos</a>
-        <a class="btn" href="/dashboard.html">Acessar painel</a>
-        <a class="btn" href="https://hummes-bot-builderr.vercel.app/">Abrir BotSuite</a>
-        <a class="btn" href="https://www.linkedin.com/in/samuelhummes/" target="_blank" rel="noreferrer">LinkedIn</a>
-      </div>
+            <h2 class="hTitle">
+              Teu atendimento no WhatsApp com cara de <span>produto premium</span>, mas simples de usar.
+            </h2>
 
-      <div class="kpis">
-        <div class="kpi"><b>Foco</b><span>Execução • UX • Performance</span></div>
-        <div class="kpi"><b>Stack</b><span>Web • Apps • Bots</span></div>
-        <div class="kpi"><b>Estilo</b><span>Clean • Premium • Simples</span></div>
-      </div>
+            <p class="hSub">
+              A <b>Hummes BotSuite</b> foi pensada pra pequenos negócios que querem automatizar o atendimento sem depender de programador.
+              Tu escolhe um template pronto, conecta teu número, personaliza menu, serviços e mensagens, e deixa o bot trabalhar por ti.
+            </p>
 
-      <div class="div"></div>
+            <div class="heroCtas">
+              <a class="btn primary" href="#precos">Ver planos</a>
+              <a class="btn" href="#como-funciona">Como funciona</a>
+              <a class="btn ghost" href="#produto" data-action="open-demo">Ver apresentação</a>
+            </div>
 
-      <div class="pillRow">
-        <span class="pill">Automação & Bots (WhatsApp)</span>
-        <span class="pill">Integrações de API</span>
-        <span class="pill">Sistemas internos sob medida</span>
-        <span class="pill">Interfaces web/app</span>
+            <div class="heroInfoBar" aria-label="Destaques rápidos">
+              <div class="chip">✅ +10 templates prontos</div>
+              <div class="chip">✅ Edita em minutos</div>
+              <div class="chip">✅ Suporte via WhatsApp</div>
+              <div class="chip">✅ Assinatura mensal acessível</div>
+            </div>
+
+            <div class="row">
+              <div class="mini">
+                <b>Pra quem é</b>
+                <span>
+                  Pequenos negócios que precisam responder rápido, organizar atendimento e vender mais sem complicação.
+                  Ideal pra quem quer autonomia sem depender de dev toda vez.
+                </span>
+              </div>
+              <div class="mini">
+                <b>O que resolve</b>
+                <span>
+                  Fila, demora, mensagens perdidas, menu confuso, atendimento sem padrão e pouca conversão.
+                  Tudo de um jeito mais claro e profissional.
+                </span>
+              </div>
+              <div class="mini">
+                <b>O diferencial</b>
+                <span>
+                  Tu mesmo edita. Pagou, liberou painel. Parou de pagar, o acesso fica bloqueado até renovar.
+                  Simples, direto e escalável.
+                </span>
+              </div>
+            </div>
+
+            <div class="heroBrandStrip">
+              <img src="./assets/logo-hummes.png" alt="Marca Hummes" class="miniLogo" />
+              <div style="display:flex; flex-direction:column; gap:10px; min-width:220px; flex:1;">
+                <div class="brandPalette">
+                  <span class="brandDot dotBlue"></span>
+                  <span class="brandDot dotGreen"></span>
+                  <span class="brandDot dotYellow"></span>
+                  <span class="brandDot dotOrange"></span>
+                  <span class="brandDot dotRed"></span>
+                </div>
+                <div class="spectrum"></div>
+                <div class="slogan">Tecnologia • Humanidade • Equilíbrio</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mock brandMock" aria-label="Apresentação da marca Hummes">
+          <img src="./assets/a45489e5-e831-49fc-8cce-5c62b98a563a.png" alt="Apresentação visual da Hummes" />
+        </div>
       </div>
     </section>
 
-    <aside class="card heroImg">
-      <img src="assets/a45489e5-e831-49fc-8cce-5c62b98a563a.png" alt="Hummes preview" />
-    </aside>
-  </div>
-</main>
-
-<section id="sobre" class="section">
-  <div class="container split">
-    <div class="item">
-      <h2>🧠 Sobre</h2>
-      <p>
-        Eu construo soluções digitais com uma pegada bem prática: <b>interface bonita, fluxo simples e entrega real</b>.
-        Sem corporativês. Sem prometer “IA mágica”. O objetivo é sempre o mesmo: <b>resolver o problema do cliente e deixar fácil de usar</b>.
-      </p>
-      <div class="div"></div>
-      <p class="small"><b>Posicionamento:</b> prestador de serviços (CNPJ) + produtos próprios em evolução (MVPs).</p>
-    </div>
-
-    <div class="item previewBox">
-      <h2>🎨 Identidade</h2>
-      <p class="small" style="margin-bottom:12px">Paleta off-white + cores suaves. Clean, leve e “cara de produto pronto”.</p>
-      <img src="assets/0ca7a1e8-ff2b-4864-b3e2-40be91012149.png" alt="Paleta Hummes" />
-    </div>
-  </div>
-</section>
-
-<section id="servicos" class="section">
-  <div class="container">
-    <h2>🧩 Soluções que eu entrego</h2>
-    <div class="grid3">
-      <div class="item">
-        <h3>Automação & Bots</h3>
-        <p>WhatsApp (Cloud API), fluxos de atendimento, captura de leads, menus e integrações com sistemas.</p>
+    <section id="produto">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">🧩 Produto</h3>
+          <p class="secSub">
+            O BotSuite é um <b>painel simples</b> onde o cliente leigo consegue criar e atualizar o bot sozinho,
+            usando modelos prontos, edição visual e um fluxo fácil de entender.
+          </p>
+        </div>
       </div>
-      <div class="item">
-        <h3>Integrações de API</h3>
-        <p>Pagamentos, CRMs, ERPs, Google APIs, webhooks, automações e sincronização de dados.</p>
-      </div>
-      <div class="item">
-        <h3>Interfaces Web/App</h3>
-        <p>Dashboards, painéis internos e interfaces premium: simples, rápidas e fáceis de manter.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="produto" class="section">
-  <div class="container split">
-    <div class="item">
-      <h2>🚀 Produto: BotSuite (Editor de Bots)</h2>
-      <p>
-        Um editor visual pra montar bots (fluxo em árvore) com templates e export/import JSON.
-        Ele é o “núcleo” do produto de bots — e eu vou evoluindo por camadas (runtime, publish, integrações).
-      </p>
-      <div class="ctaRow">
-        <a class="btn primary" href="pages/bot.html">Acessar BotSuite</a>
-        <a class="btn" href="https://github.com/hummespage" target="_blank" rel="noreferrer">Ver GitHub</a>
-      </div>
-      <div class="div"></div>
-      <p class="small"><b>Nota honesta:</b> hoje é builder/editor (MVP). Produção com WhatsApp Cloud API entra nos próximos passos.</p>
-    </div>
+      <div class="twoCol">
+        <div class="grid3" style="grid-template-columns:repeat(3,1fr);">
+          <div class="card pad feature">
+            <h3>Editor simples</h3>
+            <p>
+              Tu altera mensagens, menu, serviços, preços, horários, links e fluxos sem precisar escrever código.
+              Tudo foi pensado pra ser leve, intuitivo e rápido de mexer no dia a dia.
+            </p>
+          </div>
 
-    <div class="item previewBox">
-      <h2>👀 Preview</h2>
-      <p class="small" style="margin-bottom:12px">Screenshot real do site/portfolio atual.</p>
-      <img src="assets/printdosite.png" alt="Preview do site" />
-    </div>
-  </div>
-</section>
+          <div class="card pad feature">
+            <h3>Templates prontos</h3>
+            <p>
+              Mais de 10 templates pra salão, clínica, delivery, imobiliária, oficina e outros tipos de negócio.
+              Tu começa de algo pronto e só adapta pra tua realidade.
+            </p>
+          </div>
 
-<section id="contato" class="section">
-  <div class="container split">
-    <div class="item">
-      <h2>📩 Vamos conversar</h2>
-      <p>Me diz o que tu precisa e eu te retorno com uma proposta simples e objetiva.</p>
-      <div class="div"></div>
-      <div class="pillRow">
-        <span class="pill">WhatsApp: 48 99215-5149</span>
-        <span class="pill">CNPJ: 53.245.305/0001-20</span>
-        <span class="pill">GitHub: hummespage</span>
-      </div>
-      <div class="div"></div>
-      <div class="notice">
-        <b>Captura de contatos:</b> por padrão o formulário abre o WhatsApp com a mensagem preenchida.
-        Se quiser salvar em banco, ativa Supabase no <span class="code">js/main.js</span>.
-      </div>
-    </div>
+          <div class="card pad feature">
+            <h3>Publicação e controle</h3>
+            <p>
+              Pagamento confirmado libera o painel e a operação do bot.
+              Se a assinatura vencer, o acesso é bloqueado até a renovação, sem gambiarra e sem confusão.
+            </p>
+          </div>
+        </div>
 
-    <div class="item">
-      <h2>📝 Formulário</h2>
-      <form id="leadForm" class="form">
-        <input id="name" class="input" placeholder="Teu nome" />
-        <input id="email" class="input" placeholder="Teu e-mail" />
-        <input id="whatsapp" class="input" placeholder="Teu WhatsApp (opcional)" />
-        <textarea id="reason" placeholder="O que tu quer fazer? (site, bot, automação, integração…)"></textarea>
-        <button class="btn primary" type="submit">Enviar</button>
-      </form>
-      <div class="div"></div>
-      <div class="small">
-        Links rápidos:
-        <a href="https://www.linkedin.com/in/samuelhummes/" target="_blank" rel="noreferrer">LinkedIn</a> •
-        <a href="https://github.com/hummespage" target="_blank" rel="noreferrer">GitHub</a> •
-        <a href="https://wa.me/5548992155149" target="_blank" rel="noreferrer">WhatsApp</a>
+        <div class="card sectionImageCard">
+          <img src="./assets/imagem-domeio.png" alt="Notebook com dashboard da Hummes BotSuite" />
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="div"></div>
-    <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between">
+    <section id="como-funciona">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">🪜 Como funciona</h3>
+          <p class="secSub">Do zero ao bot rodando, em poucos passos, sem enrolação.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="card pad step">
+          <b><span class="num">1</span> Criar conta</b>
+          <p class="secSub" style="margin:10px 0 0">Cadastro rápido. Depois tu entra no teu painel e começa a configurar.</p>
+        </div>
+        <div class="card pad step">
+          <b><span class="num">2</span> Escolher template</b>
+          <p class="secSub" style="margin:10px 0 0">Seleciona um modelo pronto pro teu nicho e já parte de algo estruturado.</p>
+        </div>
+        <div class="card pad step">
+          <b><span class="num">3</span> Personalizar</b>
+          <p class="secSub" style="margin:10px 0 0">Coloca teu número, serviços, horários, mensagens e opções do menu.</p>
+        </div>
+        <div class="card pad step">
+          <b><span class="num">4</span> Pagar e publicar</b>
+          <p class="secSub" style="margin:10px 0 0">Assinou, liberou. O bot entra em operação e teu painel fica disponível.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="templates">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">🧱 Templates prontos</h3>
+          <p class="secSub">
+            Aqui o cliente leigo ganha tempo de verdade: pega um modelo pronto e só adapta pro próprio negócio.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card pad feature">
+          <h3>Salão / Barbearia</h3>
+          <p>Agendamento, serviços, preços, endereço, horários, promoções e organização da fila.</p>
+        </div>
+        <div class="card pad feature">
+          <h3>Clínica / Saúde</h3>
+          <p>Triagem simples, convênios, agendamento, dúvidas frequentes, retorno e instruções básicas.</p>
+        </div>
+        <div class="card pad feature">
+          <h3>Delivery / Restaurante</h3>
+          <p>Cardápio, combos, taxas, horário de funcionamento, pedido por etapas e confirmação automática.</p>
+        </div>
+        <div class="card pad feature">
+          <h3>Imobiliária</h3>
+          <p>Filtro por bairro, tipo, valor, agendar visita e captação de lead mais completa.</p>
+        </div>
+        <div class="card pad feature">
+          <h3>Oficina / Serviços</h3>
+          <p>Checklist do problema, orçamento, status do serviço e avisos automáticos pro cliente.</p>
+        </div>
+        <div class="card pad feature">
+          <h3>Serviços locais</h3>
+          <p>Menu de serviços, dúvidas, orçamento rápido, encaminhamento pro atendimento humano e follow-up.</p>
+        </div>
+      </div>
+
+      <div class="ctaBox" style="margin-top:14px">
+        <div>
+          <div style="font-weight:900; font-size:16px">Quer um template do teu nicho?</div>
+          <div style="color:var(--muted); font-size:13px; margin-top:4px; line-height:1.5">
+            A gente pode criar ou adaptar um template sob medida e deixar ele pronto dentro da tua conta.
+          </div>
+        </div>
+        <a class="btn primary" href="#contato" data-action="whatsapp">Pedir no WhatsApp</a>
+      </div>
+    </section>
+
+    <section id="precos">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">💳 Preços</h3>
+          <p class="secSub">Assinatura mensal acessível, com lógica simples: pagou, funciona. Parou, pausa.</p>
+        </div>
+      </div>
+
+      <div class="pricing">
+        <div class="card pad price">
+          <div style="font-weight:900; font-size:15px">Starter</div>
+          <div class="value">R$ 49</div>
+          <div class="per">por mês • básico</div>
+          <ul class="clean">
+            <li>1 bot ativo</li>
+            <li>Templates essenciais</li>
+            <li>Menu + serviços + horários</li>
+            <li>Suporte via WhatsApp</li>
+          </ul>
+          <div style="margin-top:14px">
+            <a class="btn primary" href="#login" data-action="start-checkout" data-plan="starter">Assinar</a>
+          </div>
+        </div>
+
+        <div class="card pad price">
+          <div class="badge">Mais vendido</div>
+          <div style="font-weight:900; font-size:15px">Pro</div>
+          <div class="value">R$ 89</div>
+          <div class="per">por mês • completo</div>
+          <ul class="clean">
+            <li>1 bot ativo</li>
+            <li>+10 templates prontos</li>
+            <li>Captura de leads (nome, serviço, bairro)</li>
+            <li>Integrações com webhook / Sheets</li>
+            <li>Suporte prioritário</li>
+          </ul>
+          <div style="margin-top:14px">
+            <a class="btn primary" href="#login" data-action="start-checkout" data-plan="pro">Assinar</a>
+          </div>
+        </div>
+
+        <div class="card pad price">
+          <div style="font-weight:900; font-size:15px">Business</div>
+          <div class="value">R$ 149</div>
+          <div class="per">por mês • multi</div>
+          <ul class="clean">
+            <li>Até 3 bots ativos</li>
+            <li>Templates + customizações</li>
+            <li>Integrações avançadas</li>
+            <li>Onboarding com setup guiado</li>
+          </ul>
+          <div style="margin-top:14px">
+            <a class="btn primary" href="#login" data-action="start-checkout" data-plan="business">Assinar</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini" style="margin-top:12px">
+        <b>Como o bloqueio funciona</b>
+        <span>
+          O acesso ao painel e a execução do bot ficam <b>condicionados ao pagamento</b>.
+          Pagamento confirmado libera o uso. Assinatura vencida bloqueia o acesso até renovar.
+        </span>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">❓ FAQ</h3>
+          <p class="secSub">As dúvidas mais comuns já resolvidas de forma direta.</p>
+        </div>
+      </div>
+
+      <div class="grid3" style="align-items:start">
+        <details class="card">
+          <summary>Precisa saber programar?</summary>
+          <div class="pad">
+            <p>Não. A ideia é justamente o cliente leigo conseguir mexer sozinho, usando template pronto e edição simples.</p>
+          </div>
+        </details>
+
+        <details class="card">
+          <summary>Como eu ativo no meu WhatsApp?</summary>
+          <div class="pad">
+            <p>Tu cadastra o número, escolhe o template, personaliza e segue o passo a passo de ativação no painel.</p>
+          </div>
+        </details>
+
+        <details class="card">
+          <summary>E se eu parar de pagar?</summary>
+          <div class="pad">
+            <p>O painel fica bloqueado e o bot pausa. Quando renovar a assinatura, o acesso volta normalmente.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="secHead">
+        <div>
+          <h3 class="secTitle">📲 Suporte e contato</h3>
+          <p class="secSub">
+            Suporte via WhatsApp, com possibilidade de atendimento inicial por bot com IA e continuidade com humano.
+          </p>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="card pad">
+          <b style="display:block;margin-bottom:6px;font-size:15px">Falar no WhatsApp</b>
+          <div style="color:var(--muted); font-size:13px; line-height:1.55">
+            Clique e manda mensagem. Já vai com texto pronto pra pedir ajuda, tirar dúvidas ou ativar tua assinatura.
+          </div>
+          <div style="margin-top:12px">
+            <a class="btn primary" href="#"
+              data-action="whatsapp"
+              data-phone="5548992155149"
+              data-message="Oi! Quero ativar a Hummes BotSuite. Me explica os planos e como começo?">
+              Falar agora
+            </a>
+          </div>
+        </div>
+
+        <div class="card pad">
+          <b style="display:block;margin-bottom:6px;font-size:15px">Login / Painel</b>
+          <div style="color:var(--muted); font-size:13px; line-height:1.55">
+            Entrar pra editar templates, publicar o bot, acompanhar assinatura e acessar o painel.
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn" href="#login" data-action="open-login">Entrar</a>
+            <a class="btn primary" href="#login" data-action="open-register">Criar conta</a>
+          </div>
+          <div id="login" style="margin-top:12px; font-size:12px; color:var(--muted2)">
+            (No próximo passo a gente liga isso ao banco, autenticação e checkout.)
+          </div>
+        </div>
+
+        <div class="card pad">
+          <b style="display:block;margin-bottom:6px;font-size:15px">Empresa</b>
+          <div style="color:var(--muted); font-size:13px; line-height:1.6">
+            Hummes BotSuite • Florianópolis - SC<br/>
+            CNPJ: <span style="opacity:.88">53.245.305/0001-20</span><br/>
+            E-mail: <span style="opacity:.88">contato@hummes.com.br</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="ctaBox" style="margin:12px 0 6px">
       <div>
-        <b>Hummes BotSuite</b> • Florianópolis • SC<br/>
-        <span class="small">CNPJ: <span class="code" style="display:inline-block; padding:4px 8px">53.245.305/0001-20</span></span>
+        <div style="font-weight:900; font-size:18px">Bora colocar teu bot pra trabalhar por ti?</div>
+        <div style="color:var(--muted); font-size:13px; margin-top:4px; line-height:1.5">
+          Em poucos minutos tu sobe um template, personaliza o fluxo e começa a organizar melhor teu atendimento.
+        </div>
       </div>
-      <div style="display:flex; gap:10px; flex-wrap:wrap">
-        <a class="btn" href="https://www.linkedin.com/in/samuelhummes/" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a class="btn" href="https://github.com/hummespage" target="_blank" rel="noreferrer">GitHub</a>
-        <a class="btn dark" href="https://wa.me/5548992155149" target="_blank" rel="noreferrer">Falar no Whats</a>
-      </div>
+      <a class="btn primary" href="#precos">Começar agora</a>
     </div>
-    <div class="div"></div>
-    <div class="small">© 2026 Hummes. Site estático (HTML/CSS/JS). Captura de leads via WhatsApp + opção de banco (Supabase) no <span class="code">js/main.js</span>.</div>
-  </div>
-</footer>
 
-<div id="toast" class="notice" style="display:none; position:fixed; right:14px; bottom:14px; max-width:min(420px, 92vw); box-shadow: var(--shadow2)"></div>
-<script src="js/main.js"></script>
+    <footer class="foot">
+      <div class="footRow">
+        <div>© <span id="year"></span> Hummes. BotSuite • Automação WhatsApp.</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="mutedLink" href="#faq">FAQ</a>
+          <a class="mutedLink" href="#contato">Contato</a>
+          <a class="mutedLink" href="#produto">Produto</a>
+        </div>
+      </div>
+      <div style="margin-top:10px; opacity:.85; line-height:1.55">
+        Nota: este é o site de venda. Login, assinatura e bloqueio por pagamento entram no próximo passo com backend, banco e gateway.
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function openWhats(phone, message){
+      const clean = String(phone || "").replace(/\D/g,'');
+      const text = encodeURIComponent(message || "Oi! Quero saber mais sobre a Hummes BotSuite.");
+      const url = "https://wa.me/" + clean + "?text=" + text;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    document.addEventListener("click", (e) => {
+      const el = e.target.closest("[data-action]");
+      if(!el) return;
+
+      const action = el.getAttribute("data-action");
+
+      if(action === "whatsapp"){
+        e.preventDefault();
+        openWhats(
+          el.getAttribute("data-phone") || "5548992155149",
+          el.getAttribute("data-message") || "Oi! Quero ativar a Hummes BotSuite. Como funciona?"
+        );
+      }
+
+      if(action === "open-login" || action === "open-register" || action === "start-checkout" || action === "open-demo"){
+        const tgt = document.querySelector("#login");
+        if(tgt) tgt.scrollIntoView({behavior:"smooth", block:"start"});
+      }
+    });
+  </script>
 </body>
 </html>
